@@ -51,7 +51,7 @@ class MainActivity : ComponentActivity() {
                     containerColor = MaterialTheme.colorScheme.background
                 ) { innerPadding ->
                     Box(modifier = Modifier.padding(innerPadding)) {
-                        DeveloperBusinessCard()
+                        Profile()
                     }
                 }
             }
@@ -429,7 +429,8 @@ fun ProfileInfo(){
         )
         Text(
             text = stringResource(R.string.course),
-            style = MaterialTheme.typography.headlineMedium,
+//            style = MaterialTheme.typography.titleMedium,
+            style = MaterialTheme.typography.bodyLarge,
             color = MaterialTheme.colorScheme.primary
         )
         Spacer(modifier = Modifier.height(12.dp))
