@@ -1,3 +1,10 @@
 <resources>
     <string name="app_name">BusinessCard</string>
+    <string name="developer_name">Sohail Mateen</string>
+    <string name="course">CSE - Data Science Student</string>
+    <string name="bio">Passionate about Machine Learning and AI solutions.</string>
+    <string name="email">sohailmateen001@gmail.com</string>
+    <string name="linkedin">https://www.linkedin.com/in/sohail-mateen-196405284/</string>
+    <string name="github">https://github.com/Sohailmateen</string>
+
 </resources>

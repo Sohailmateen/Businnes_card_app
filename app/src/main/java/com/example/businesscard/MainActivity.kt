@@ -2,6 +2,7 @@ package com.example.businesscard
 
 import android.content.Intent
 import android.content.res.Configuration
+import android.content.res.Resources
 import android.net.Uri
 import android.os.Bundle
 import androidx.activity.ComponentActivity
@@ -9,9 +10,11 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.shape.CircleShape
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.Code
 import androidx.compose.material.icons.filled.Email
@@ -21,11 +24,15 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Brush
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalConfiguration
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextRange
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.tooling.preview.Preview
@@ -248,12 +255,231 @@ fun ContactRow(icon: ImageVector, text: String, type: String) {
     }
 }
 
+
+// practice
+//@Composable
+//fun Profile(){
+//
+//    Card(
+//        modifier = Modifier
+//            .padding(20.dp)
+//            .fillMaxWidth(),
+//        shape = RoundedCornerShape(20.dp),
+//        elevation = CardDefaults.cardElevation(8.dp),
+//    ) {
+//        Column(
+//            modifier = Modifier
+//                .fillMaxWidth(),
+//            horizontalAlignment = Alignment.CenterHorizontally,
+//            verticalArrangement = Arrangement.Center
+//
+//        ) {
+//            val image = painterResource(id = R.drawable.profile)
+//            Image(
+//                painter = image,
+//                contentDescription = "Profile Image",
+//                modifier = Modifier
+//                    .size(200.dp)
+//                    .clip(CircleShape)
+//                    .border(3.dp, Color.Black, CircleShape)
+//            )
+//            Spacer(modifier = Modifier.height(25.dp))
+//            Text(
+//                text = stringResource(R.string.developer_name),
+//                fontWeight = FontWeight.Bold,
+//                style = MaterialTheme.typography.headlineMedium,
+//                color = Color.Black
+//            )
+//            Text(
+//                text = stringResource(R.string.course),
+//                style = MaterialTheme.typography.headlineMedium,
+//                color = Color.DarkGray,
+//                modifier = Modifier.padding(bottom = 10.dp)
+//            )
+//            Text(
+//                text = stringResource(R.string.bio),
+//                style = MaterialTheme.typography.bodyLarge,
+//                color = Color.DarkGray,
+//                textAlign = TextAlign.Center,
+//                modifier = Modifier
+//                    .fillMaxWidth()
+//                    .padding( 15.dp)
+//            )
+//            Row(verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier.padding(vertical = 6.dp))
+//            {
+//                Icon(
+//                    Icons.Filled.Email,
+//                    contentDescription = "Email",
+//                    tint = Color.DarkGray,
+//                    modifier = Modifier.padding(end = 10.dp),
+//                )
+//                Text(
+//                    text = stringResource(R.string.email),
+//                    fontSize = 16.sp,
+//                    color = Color.DarkGray,
+//                    textAlign = TextAlign.Center,
+//                )
+//            }
+//            Spacer(modifier = Modifier.width(8.dp))
+//            Row(verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier.padding(vertical = 6.dp)) {
+//                Icon(
+//                    Icons.Filled.Link,
+//                    contentDescription = "LinkedIn",
+//                    tint = Color.DarkGray,
+//                    modifier = Modifier.padding(end = 10.dp),
+//                )
+//                Text(
+//                    text = stringResource(R.string.linkedin),
+//                    fontSize = 16.sp,
+//                    color = Color.DarkGray,
+//                    textAlign = TextAlign.Center,
+//                )
+//            }
+//            Spacer(modifier = Modifier.width(8.dp))
+//            Row(verticalAlignment = Alignment.CenterVertically,
+//                modifier = Modifier.padding(vertical = 6.dp)) {
+//                Icon(
+//                    Icons.Filled.Code,
+//                    contentDescription = "Github",
+//                    tint = Color.DarkGray,
+//                )
+//                Text(
+//                    text = stringResource(R.string.github),
+//                    fontSize = 16.sp,
+//                    color = Color.DarkGray,
+//                    textAlign = TextAlign.Center,
+//                )
+//            }
+//        }
+//    }
+//}
+
+/* ----------------------- practice Improved version ----------------------- */
+
+@Composable
+fun Profile(){
+
+    Box(
+        modifier = Modifier
+            .fillMaxSize()
+            .background(
+                Brush.verticalGradient(
+                    colors = listOf(
+                        Color(0xFFE3F2FD),
+                        Color.White
+                    )
+                )
+            ),
+        contentAlignment = Alignment.Center
+    ){
+        Card(
+            modifier = Modifier
+                .padding(24.dp)
+                .fillMaxWidth(),
+            shape = RoundedCornerShape(24.dp),
+            elevation = CardDefaults.cardElevation(10.dp)
+        ){
+            Column(
+                modifier = Modifier
+                    .padding(24.dp)
+                    .fillMaxWidth(),
+                horizontalAlignment = Alignment.CenterHorizontally
+            ){
+                ProfileImage()
+
+                Spacer(modifier = Modifier.height(16.dp))
+
+                ProfileInfo()
+
+                Spacer(modifier = Modifier.height(20.dp))
+
+                ContactSection()
+            }
+        }
+    }
+}
+
+@Composable
+fun ProfileImage(){
+    val image = painterResource(R.drawable.profile)
+
+    Image(
+        painter = image,
+        contentDescription = "Profile Image",
+        modifier = Modifier
+            .size(140.dp)
+            .clip(CircleShape)
+            .border(3.dp, MaterialTheme.colorScheme.primary, CircleShape),
+        contentScale = ContentScale.Crop
+    )
+}
+
+@Composable
+fun ProfileInfo(){
+
+    Column(
+        horizontalAlignment = Alignment.CenterHorizontally
+    ) {
+        Text(
+            text = stringResource(R.string.developer_name),
+            style = MaterialTheme.typography.headlineMedium,
+            fontWeight = FontWeight.Bold
+        )
+        Text(
+            text = stringResource(R.string.course),
+            style = MaterialTheme.typography.headlineMedium,
+            color = MaterialTheme.colorScheme.primary
+        )
+        Spacer(modifier = Modifier.height(12.dp))
+
+        Text(
+            text = stringResource(R.string.bio),
+            style = MaterialTheme.typography.bodyLarge,
+            textAlign = TextAlign.Center,
+            color = Color.Gray
+        )
+    }
+}
+
+@Composable
+fun ContactSection(){
+    Column(
+        verticalArrangement = Arrangement.Center
+    ) {
+        ContactRow(Icons.Filled.Email, stringResource(R.string.email),"email")
+        ContactRow(Icons.Filled.Link, stringResource(R.string.linkedin),"link")
+        ContactRow(Icons.Filled.Code, stringResource(R.string.github),"link")
+    }
+}
+
+@Composable
+fun ContactRow(icon: ImageVector, text: String) {
+    Row(
+        verticalAlignment = Alignment.CenterVertically
+    ){
+        Icon(
+            imageVector = icon,
+            contentDescription = null,
+            tint = MaterialTheme.colorScheme.primary,
+        )
+        Spacer(modifier = Modifier.width(10.dp))
+
+        Text(
+            text = text,
+            style = MaterialTheme.typography.bodyMedium
+        )
+    }
+}
+
+
 /* ----------------------- PREVIEW ----------------------- */
 
 @Preview(showBackground = true)
 @Composable
 fun CardPreview() {
     BusinessCardTheme {
-        DeveloperBusinessCard()
+        Profile()
     }
 }
